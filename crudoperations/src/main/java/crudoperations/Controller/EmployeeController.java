@@ -1,12 +1,13 @@
 package crudoperations.Controller;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,41 +20,40 @@ import org.springframework.web.bind.annotation.RestController;
 import com.crudoperations.Model.Employee;
 import com.crudoperations.Repository.Employeerepository;
 @RestController
-@RequestMapping("/api/v1/employees")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+
+
 public class EmployeeController {
-@Autowired
+	
+ @Autowired
+private Employeerepository employeeRepository;
 
-		private final Employeerepository employeeRepository;
-
-    EmployeeController(Employeerepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
+   
 
 		// get all employeee
 
-		@GetMapping("/employees")
-		
+		@GetMapping("/employee")
 		public List<Employee> getAllEmployee() {
 			return employeeRepository.findAll();
 
 		}
 		// create employee rest api
-		@PostMapping("/employees")
+		@PostMapping("/employee")
 		public Employee createEmployee(@RequestBody Employee employee) {
 			return employeeRepository.save(employee);
 		}
 
 		// get employee by id rest api
 	    
-@GetMapping("employees/{id}")
+@GetMapping("/employee/{id}")
 		public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
 			Employee employee = employeeRepository.getById(id);
 			return ResponseEntity.ok(employee);
 
 		}
 		// update employee rest api
-		@PutMapping("/employees/{id}")
+		@PutMapping("/employee/{id}")
 		public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
 			Employee employee = employeeRepository.getById(id);
 			employee.setFirstName(employeeDetails.getFirstName());
@@ -64,7 +64,7 @@ public class EmployeeController {
 		}
 
 		// delete employee rest api
-		@DeleteMapping("/employees/{id}")
+		@DeleteMapping("/employee/{id}")
 		public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id) {
 			Employee employee = employeeRepository.getById(id);
 			employeeRepository.delete(employee);

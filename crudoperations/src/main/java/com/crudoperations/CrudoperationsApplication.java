@@ -2,15 +2,15 @@ package com.crudoperations;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.crudoperations.Model")
+@ComponentScan(basePackages={"crudoperations.Controller"})
 public class CrudoperationsApplication {
 
 	public static void main(String[] args) {
         SpringApplication.run(CrudoperationsApplication.class, args);
 
 	}
-
+	
 }
